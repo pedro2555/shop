@@ -25,9 +25,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply --layout-horizontal;
         position: relative;
         margin-bottom: 24px;
+      }
 
-        font-size: 180%;
+      .name,
+      .size {
+        font-size: 1.5em;
         font-weight: 400;
+      }
+      .price {
+        font-size: 1.5em;
+        font-weight: 700;
       }
 
       shop-image {
@@ -179,9 +186,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="detail">
         <div class="quantity">
           <shop-select>
-            <label prefix>Qty:</label>
-            <select id="quantitySelect" aria-label="Change quantity" value="[[entry.quantity]]"
-                on-change="_quantityChange">
+            <label prefix>Pax:</label>
+            <select id="personsSelect" aria-label="Change persons" value="[[entry.persons]]"
+                on-change="_personsChange">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -192,13 +199,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <option value="8">8</option>
               <option value="9">9</option>
               <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
             </select>
             <shop-md-decorator aria-hidden="true"></shop-md-decorator>
           </shop-select>
         </div>
-        <div class="size">Size: <span>[[entry.size]]</span></div>
+        <div class="size"><span>[[entry.day]] / [[entry.month]] / [[entry.year]]</span></div>
         <div class="price">[[_formatPrice(entry.item.price)]]</div>
 
         <!--
@@ -222,16 +227,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       }}
 
-      _quantityChange() {
-        this._setCartItem(parseInt(this.$.quantitySelect.value, 10));
+      _personsChange() {
+        this._setCartItem(parseInt(this.$.personsSelect.value, 10));
       }
 
-      _setCartItem(quantity) {
+      _setCartItem(persons) {
         this.dispatchEvent(new CustomEvent('set-cart-item', {
           bubbles: true, composed: true, detail: {
             item: this.entry.item,
-            quantity: quantity,
-            size: this.entry.size
+            persons: persons,
+            day: this.entry.day,
+            month: this.entry.month,
+            year: this.entry.year
           }}));
       }
 

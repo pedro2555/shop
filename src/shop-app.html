@@ -527,16 +527,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         this.$.cart.addItem(event.detail);
         this._cartModal.open();
-        this._announce('Item added to the cart');
+        this._announce('Tour added to the cart');
       }
 
       _onSetCartItem(event) {
         let detail = event.detail;
         this.$.cart.setItem(detail);
-        if (detail.quantity === 0) {
-          this._announce('Item deleted');
+        if (detail.persons === 0) {
+          this._announce('Tour deleted');
         } else {
-          this._announce('Quantity changed to ' + detail.quantity);
+          this._announce('Persons changed to ' + detail.persons);
         }
       }
 

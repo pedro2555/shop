@@ -46,16 +46,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }}
 
       addItem(detail) {
-        let i = this._indexOfEntry(detail.item.name, detail.size);
+        let i = this._indexOfEntry(detail.item.name, detail.day, detail.month, detail.year);
         if (i !== -1) {
-          detail.quantity += this.cart[i].quantity;
+          detail.persons += this.cart[i].persons;
         }
         this.setItem(detail);
       }
 
       setItem(detail) {
-        let i = this._indexOfEntry(detail.item.name, detail.size);
-        if (detail.quantity === 0) {
+        let i = this._indexOfEntry(detail.item.name, detail.day, detail.month, detail.year);
+        if (detail.persons === 0) {
           // Remove item from cart when the new quantity is 0.
           if (i !== -1) {
             this.splice('cart', i, 1);
@@ -78,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _computeNumItems() {
         if (this.cart) {
           return this.cart.reduce((total, entry) => {
-            return total + entry.quantity;
+            return total + entry.persons;
           }, 0);
         }
 
@@ -88,18 +88,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _computeTotal() {
         if (this.cart) {
           return this.cart.reduce((total, entry) => {
-            return total + entry.quantity * entry.item.price;
+            return total + entry.persons * entry.item.price;
           }, 0);
         }
 
         return 0;
       }
 
-      _indexOfEntry(name, size) {
+      _indexOfEntry(name, day, month, year) {
         if (this.cart) {
           for (let i = 0; i < this.cart.length; ++i) {
             let entry = this.cart[i];
-            if (entry.item.name === name && entry.size === size) {
+            if (entry.item.name === name && entry.day === day && entry.month === month && entry.year === year) {
               return i;
             }
           }
